@@ -63,6 +63,7 @@ export default {
   methods: {
     addOrUpdateTodo() {
       if (this.content.trim() === "") {
+        this.content = "";
         this.editingId = null;
         return;
       }
