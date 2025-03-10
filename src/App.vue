@@ -1,17 +1,23 @@
 <template>
   <div id="app">
-    <!-- <img alt="Vue logo" src="./assets/logo.png" /> -->
+    <HeaderComponent />
     <TodoList />
+    <FooterComponent><template #footer>Footer</template></FooterComponent>
   </div>
 </template>
 
 <script>
-import TodoList from "./components/TodoList.vue";
+import HeaderComponent from "./components/Header/Header.vue";
+import FooterComponent from "./components/Footer/Footer.vue";
+
+import TodoList from "./components/Todos/TodoList.vue";
 
 export default {
   name: "App",
   components: {
+    HeaderComponent,
     TodoList,
+    FooterComponent,
   },
 };
 </script>
