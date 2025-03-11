@@ -6,12 +6,12 @@
         :content="content"
         :editingId="editingId"
         @update="content = $event"
-        @add-or-update="addOrUpdateTodo"
+        @addOrUpdate="addOrUpdateTodo"
         ref="input-todo"
       />
       <FilterTabs
         :tabs="tabs"
-        :current-tab="currentTab"
+        :currentTab="currentTab"
         @update:currentTab="currentTab = $event"
       />
       <div
@@ -22,10 +22,10 @@
         There is no todo
       </div>
       <TodoItems
-        :filtered-todos="filteredTodos"
-        @removeTodo="removeTodo"
-        @startEditTodo="startEditTodo"
-        @toggle-complete="toggleComplete"
+        :filteredTodos="filteredTodos"
+        @removeItem="removeTodo"
+        @startEditItem="startEditTodo"
+        @toggleComplete="toggleComplete"
       />
     </section>
   </div>
@@ -69,14 +69,11 @@ export default {
   computed: {
     filteredTodos() {
       // console.log(this.currentTab);
-      switch (this.currentTab) {
-        case "completed":
-          return this.todos.filter((todo) => todo.completed);
-        case "incomplete":
-          return this.todos.filter((todo) => !todo.completed);
-        default:
-          return this.todos;
-      }
+      return this.currentTab === "all"
+        ? this.todos
+        : this.todos.filter(
+            (todo) => todo.completed === (this.currentTab === "completed")
+          );
     },
   },
   watch: {},
@@ -84,18 +81,12 @@ export default {
   methods: {
     toggleComplete(id) {
       this.todos = this.todos.map((todo) => {
-        if (todo.id === id) {
-          return {
-            ...todo,
-            completed: !todo.completed,
-          };
-        }
-        return todo;
+        return todo.id === id ? { ...todo, completed: !todo.completed } : todo;
       });
     },
 
     addOrUpdateTodo() {
-      if (this.content.trim() === "") {
+      if (!this.content.trim()) {
         this.content = "";
         this.editingId = null;
         return;
@@ -110,25 +101,14 @@ export default {
     },
 
     addTodo() {
-      if (this.todos.length) {
-        this.todos = [
-          ...this.todos,
-          {
-            name: this.content,
-            id: this.todos[this.todos.length - 1].id + 1,
-            status: "unfinished",
-          },
-        ];
-      } else {
-        this.todos = [
-          ...this.todos,
-          {
-            name: this.content,
-            id: 1,
-            status: "unfinished",
-          },
-        ];
-      }
+      this.todos = [
+        ...this.todos,
+        {
+          name: this.content,
+          id: this.todos.length ? this.todos[this.todos.length - 1].id + 1 : 1,
+          completed: false,
+        },
+      ];
 
       this.content = "";
     },
@@ -153,13 +133,12 @@ export default {
 
     editTodo(id) {
       this.todos = this.todos.map((todo) => {
-        if (todo.id === id) {
-          return {
-            ...todo,
-            name: this.content,
-          };
-        }
-        return todo;
+        return todo.id === id
+          ? {
+              ...todo,
+              name: this.content,
+            }
+          : todo;
       });
 
       this.content = "";

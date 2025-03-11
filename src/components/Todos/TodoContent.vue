@@ -4,7 +4,7 @@
       <input
         type="checkbox"
         :checked="todo.completed"
-        @change="$emit('toggle-complete', todo.id)"
+        @change="toggleComplete"
         class="todo-checkbox"
         hidden
       />
@@ -17,9 +17,14 @@
 </template>
 <script>
 export default {
-  name: "TodoItem",
+  name: "TodoContent",
   props: {
     todo: Object,
+  },
+  methods: {
+    toggleComplete() {
+      this.$emit("toggleComplete", this.todo.id);
+    },
   },
 };
 </script>

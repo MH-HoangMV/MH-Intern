@@ -6,11 +6,11 @@
       placeholder="What needs to be done?..."
       :value="content"
       @input="onChange"
-      @keyup.enter="$emit('add-or-update')"
+      @keyup.enter="addOrUpdate"
       ref="input"
     />
-    <button @click="$emit('add-or-update')">
-      {{ editingId ? "Update" : "Add" }}
+    <button @click="addOrUpdate">
+      {{ updateOrAdd }}
     </button>
   </div>
 </template>
@@ -28,6 +28,11 @@ export default {
       default: null,
     },
   },
+  computed: {
+    updateOrAdd() {
+      return this.editingId ? "Update" : "Add";
+    },
+  },
   methods: {
     onChange(e) {
       this.$emit("update", e.target.value);
@@ -35,6 +40,9 @@ export default {
 
     focus() {
       this.$refs.input.focus();
+    },
+    addOrUpdate() {
+      this.$emit("addOrUpdate");
     },
   },
 };

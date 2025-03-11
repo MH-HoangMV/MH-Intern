@@ -1,26 +1,18 @@
 <template>
   <ul class="list-items" v-if="filteredTodos.length > 0">
     <div class="group-item" v-for="todo in filteredTodos" :key="todo.id">
-      <TodoItem
-        :todo="todo"
-        @toggle-complete="$emit('toggle-complete', $event)"
+      <TodoContent :todo="todo" @toggleComplete="toggleComplete" />
+      <EditOrDel
+        :item="todo"
+        @removeItem="removeTodo"
+        @startEditItem="startEditTodo"
       />
-      <div class="action-item">
-        <span
-          @click.stop="$emit('startEditTodo', todo.id, todo.name)"
-          class="edit-icon"
-        >
-          <i class="fa-solid fa-pen-to-square"></i>
-        </span>
-        <span @click.stop="$emit('removeTodo', todo.id)" class="delete-icon">
-          <i class="fa-solid fa-trash"></i>
-        </span>
-      </div>
     </div>
   </ul>
 </template>
 <script>
-import TodoItem from "./TodoItem.vue";
+import TodoContent from "./TodoContent.vue";
+import EditOrDel from "../../components/Action/EditOrDel.vue";
 
 export default {
   name: "TodoItems",
@@ -28,7 +20,19 @@ export default {
     filteredTodos: Array,
   },
   components: {
-    TodoItem,
+    TodoContent,
+    EditOrDel,
+  },
+  methods: {
+    toggleComplete(id) {
+      this.$emit("toggleComplete", id);
+    },
+    removeTodo(id) {
+      this.$emit("removeItem", id);
+    },
+    startEditTodo(id, name) {
+      this.$emit("startEditItem", id, name);
+    },
   },
 };
 </script>
@@ -112,35 +116,5 @@ export default {
 .item.completed {
   text-decoration: line-through;
   color: #9ca3af;
-}
-
-.action-item {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.edit-icon {
-  color: #0077ff;
-  cursor: pointer;
-  padding: 2px 4px;
-  display: inline-block;
-  transition: all 0.2s ease-in-out;
-}
-
-.edit-icon:hover {
-  transform: scale(1.1);
-}
-
-.delete-icon {
-  color: #ff3333;
-  cursor: pointer;
-  padding: 2px 4px;
-  display: inline-block;
-  transition: all 0.2s ease-in-out;
-}
-
-.delete-icon:hover {
-  transform: scale(1.1);
 }
 </style>

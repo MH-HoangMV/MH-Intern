@@ -4,7 +4,7 @@
       v-for="tab in tabs"
       :key="tab.value"
       :class="['tab', { active: currentTab === tab.value }]"
-      @click="$emit('update:currentTab', tab.value)"
+      @click="updateCurrentTab(tab)"
     >
       {{ tab.label }}
     </span>
@@ -16,6 +16,11 @@ export default {
   props: {
     tabs: Array,
     currentTab: String,
+  },
+  methods: {
+    updateCurrentTab(tab) {
+      this.$emit("update:currentTab", tab.value);
+    },
   },
 };
 </script>
