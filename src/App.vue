@@ -1,7 +1,11 @@
 <template>
   <div id="app">
     <HeaderComponent />
-    <TodoList />
+    <div class="container">
+      <NavComponent />
+      <router-view></router-view>
+    </div>
+
     <FooterComponent><template #footer>Footer</template></FooterComponent>
   </div>
 </template>
@@ -9,14 +13,13 @@
 <script>
 import HeaderComponent from "./components/Header/Header.vue";
 import FooterComponent from "./components/Footer/Footer.vue";
-
-import TodoList from "./components/Todos/TodoList.vue";
+import NavComponent from "./components/Nav/Nav.vue";
 
 export default {
   name: "App",
   components: {
+    NavComponent,
     HeaderComponent,
-    TodoList,
     FooterComponent,
   },
 };
@@ -30,5 +33,11 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #3f444a;
+}
+.container {
+  width: 640px;
+  max-width: calc(100% - 32px);
+  height: 769px;
+  margin: 0 auto;
 }
 </style>
