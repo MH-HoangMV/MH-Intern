@@ -66,7 +66,6 @@ export default {
   },
   computed: {
     filteredTodos() {
-      // console.log(this.currentTab);
       return this.currentTab === "all"
         ? this.todos
         : this.todos.filter(
@@ -154,9 +153,8 @@ export default {
 
 .todo-list {
   width: 285px;
-  margin-top: 200px;
-
-  margin: 0 auto;
+  height: 769px;
+  margin: 100px auto 0;
 }
 
 .list-items {

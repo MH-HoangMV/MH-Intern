@@ -1,13 +1,21 @@
 import Vue from "vue";
-import Router from "vue-router";
+// import Router from "vue-router";
 import Home from "../views/Home/Home.vue";
 import VueRouter from "vue-router";
-import TodoList from "@/components/Todos/TodoList.vue";
+import TodoList from "@/views/Todos/TodoList.vue";
 
-Vue.use(Router);
+Vue.use(VueRouter);
 
 const routes = [
-  { path: "/", component: Home },
+  { path: "/", component: Home, name: "home" },
+  {
+    path: "/users",
+    component: () => import("../views/Users/Users.vue"),
+  },
+  {
+    path: "/users/:id",
+    component: () => import("../views/Users/UserDetails.vue"),
+  },
   {
     path: "/about",
     component: () =>
@@ -18,12 +26,42 @@ const routes = [
     component: TodoList,
     beforeEnter: (to, from, next) => {
       const check = window.confirm("Am I handsome?");
-      // console.log(to, from);
       if (!check) {
         next({ path: from.path });
       }
       next();
     },
+  },
+  {
+    path: "/profile",
+    component: () =>
+      import(/* webpackChunkName: "about" */ "../views/Profile/Profile.vue"),
+    beforeEnter: (to, from, next) => {
+      const access = localStorage.getItem("access");
+      if (access) {
+        next();
+      } else {
+        next({ name: "login" });
+      }
+    },
+  },
+  {
+    path: "/login",
+    name: "login",
+    component: () =>
+      import(/* webpackChunkName: "about" */ "../components/Login/Login.vue"),
+    beforeEnter: (to, from, next) => {
+      const access = localStorage.getItem("access");
+      if (!access) {
+        next();
+      } else {
+        next({ name: "home" });
+      }
+    },
+  },
+  {
+    path: "*",
+    component: () => import("../components/NotFound/NotFound.vue"),
   },
 ];
 

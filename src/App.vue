@@ -35,9 +35,11 @@ export default {
   color: #3f444a;
 }
 .container {
-  width: 640px;
+  width: 740px;
   max-width: calc(100% - 32px);
-  height: 769px;
+  min-height: 100vh;
   margin: 0 auto;
+  background-color: #f5f5f5;
+  padding: 20px;
 }
 </style>
