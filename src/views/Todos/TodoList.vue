@@ -1,34 +1,32 @@
 <template>
-  <div class="container">
-    <section class="todo-list">
-      <h1 class="heading">Todo List</h1>
-      <TodoInput
-        :content="content"
-        :editingId="editingId"
-        @update="content = $event"
-        @addOrUpdate="addOrUpdateTodo"
-        ref="input-todo"
-      />
-      <FilterTabs
-        :tabs="tabs"
-        :currentTab="currentTab"
-        @update:currentTab="currentTab = $event"
-      />
-      <div
-        class="list-items"
-        :class="{ 'p-15': todos.length === 0 }"
-        v-if="todos.length === 0"
-      >
-        There is no todo
-      </div>
-      <TodoItems
-        :filteredTodos="filteredTodos"
-        @removeItem="removeTodo"
-        @startEditItem="startEditTodo"
-        @toggleComplete="toggleComplete"
-      />
-    </section>
-  </div>
+  <section class="todo-list">
+    <h1 class="heading">Todo List</h1>
+    <TodoInput
+      :content="content"
+      :editingId="editingId"
+      @update="content = $event"
+      @addOrUpdate="addOrUpdateTodo"
+      ref="input-todo"
+    />
+    <FilterTabs
+      :tabs="tabs"
+      :currentTab="currentTab"
+      @update:currentTab="currentTab = $event"
+    />
+    <div
+      class="list-items"
+      :class="{ 'p-15': todos.length === 0 }"
+      v-if="todos.length === 0"
+    >
+      There is no todo
+    </div>
+    <TodoItems
+      :filteredTodos="filteredTodos"
+      @removeItem="removeTodo"
+      @startEditItem="startEditTodo"
+      @toggleComplete="toggleComplete"
+    />
+  </section>
 </template>
 <script>
 import TodoInput from "./TodoInput.vue";
@@ -68,7 +66,6 @@ export default {
   },
   computed: {
     filteredTodos() {
-      // console.log(this.currentTab);
       return this.currentTab === "all"
         ? this.todos
         : this.todos.filter(
@@ -147,29 +144,20 @@ export default {
 };
 </script>
 <style scoped lang="css">
-.container {
-  width: 640px;
-  max-width: calc(100% - 32px);
-  height: 769px;
-  margin: 0 auto;
-  display: flex;
-  justify-content: center;
-  background: #f2f2f2;
-}
-
-.container .heading {
+.heading {
   text-align: center;
   margin-bottom: 20px;
   font-size: 2.4rem;
   font-weight: 600;
 }
 
-.container .todo-list {
+.todo-list {
   width: 285px;
-  margin-top: 200px;
+  height: 769px;
+  margin: 100px auto 0;
 }
 
-.container .list-items {
+.list-items {
   display: flex;
   flex-direction: column;
   margin-top: 10px;
