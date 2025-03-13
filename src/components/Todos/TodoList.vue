@@ -2,13 +2,13 @@
   <div class="container">
     <section class="todo-list">
       <h1 class="heading">Todo List</h1>
-      <TodoInput
+      <!-- <TodoInput
         :content="content"
         :editingId="editingId"
         @update="content = $event"
         @addOrUpdate="addOrUpdateTodo"
         ref="input-todo"
-      />
+      /> -->
       <FilterTabs
         :tabs="tabs"
         :currentTab="currentTab"

@@ -2,7 +2,7 @@
   <div id="app">
     <HeaderComponent />
     <TodoList />
-    <FooterComponent><template #footer>Footer</template></FooterComponent>
+    <!-- <FooterComponent><template #footer>Footer</template></FooterComponent> -->
   </div>
 </template>
 
