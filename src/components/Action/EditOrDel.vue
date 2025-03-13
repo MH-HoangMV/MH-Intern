@@ -23,6 +23,8 @@ export default {
   },
   methods: {
     startEditItem(id, name) {
+      console.log(id, name);
+
       this.$emit("startEditItem", id, name);
     },
     removeItem(id) {

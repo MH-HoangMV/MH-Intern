@@ -3,16 +3,20 @@
     <label class="gr-check">
       <input
         type="checkbox"
-        :checked="todo.completed"
+        :checked="todo.status === 'completed'"
         @change="toggleComplete"
         class="todo-checkbox"
         hidden
       />
       <span class="ct-check"></span>
     </label>
-    <li class="item" :class="{ completed: todo.completed }" :title="todo.name">
+    <p
+      class="item"
+      :class="{ completed: todo.status === 'completed' }"
+      :title="todo.name"
+    >
       <span v-html="todo.name"></span>
-    </li>
+    </p>
   </div>
 </template>
 <script>

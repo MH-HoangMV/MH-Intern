@@ -46,12 +46,17 @@ export default {
         {
           name: "This is a too long long long long todo",
           id: 1,
-          completed: true,
+          status: "completed",
         },
         {
           name: "Todo_2",
           id: 2,
-          completed: false,
+          status: "incomplete",
+        },
+        {
+          name: "Todo_3",
+          id: 3,
+          status: "progress",
         },
       ],
       content: "",
@@ -61,6 +66,7 @@ export default {
         { label: "All", value: "all" },
         { label: "Completed", value: "completed" },
         { label: "Incomplete", value: "incomplete" },
+        { label: "Progress", value: "progress" },
       ],
     };
   },
@@ -68,9 +74,7 @@ export default {
     filteredTodos() {
       return this.currentTab === "all"
         ? this.todos
-        : this.todos.filter(
-            (todo) => todo.completed === (this.currentTab === "completed")
-          );
+        : this.todos.filter((todo) => todo.status === this.currentTab);
     },
   },
   watch: {},
@@ -78,7 +82,12 @@ export default {
   methods: {
     toggleComplete(id) {
       this.todos = this.todos.map((todo) => {
-        return todo.id === id ? { ...todo, completed: !todo.completed } : todo;
+        return todo.id === id
+          ? {
+              ...todo,
+              status: todo.status === "completed" ? "incomplete" : "completed",
+            }
+          : todo;
       });
     },
 
@@ -103,7 +112,7 @@ export default {
         {
           name: this.content,
           id: this.todos.length ? this.todos[this.todos.length - 1].id + 1 : 1,
-          completed: false,
+          status: "incomplete",
         },
       ];
 

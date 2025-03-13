@@ -29,6 +29,8 @@ export default {
   display: flex;
   margin-top: 10px;
   border-bottom: 1px solid #dee2e6;
+  overflow-x: auto;
+  padding-bottom: 5px;
 }
 
 .filter-tabs .tab {
