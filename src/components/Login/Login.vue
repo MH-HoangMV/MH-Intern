@@ -14,7 +14,11 @@
             <p class="auth-message" v-if="!isAuthorized">
               Email or password is incorrect
             </p>
-            <ValidationProvider name="email" rules="email" v-slot="{ errors }">
+            <ValidationProvider
+              name="email"
+              rules="email|required"
+              v-slot="{ errors }"
+            >
               <input
                 type="text"
                 placeholder="EMAIL"
@@ -55,16 +59,26 @@
 <script>
 import { ValidationObserver, ValidationProvider, extend } from "vee-validate";
 import { required } from "vee-validate/dist/rules";
+import { emailSchema, passwordSchema } from "@/utils/validate/Login";
 extend("passwordStrength", {
   validate(value) {
-    return /[A-Z]/.test(value) && /[0-9]/.test(value) && value.length >= 8;
+    try {
+      passwordSchema.validateSync(value);
+      return true;
+    } catch (err) {
+      return err.message;
+    }
   },
-  message:
-    "Password must contain at least one uppercase letter and one number and be at least 8 characters long.",
+  message: "Password is invalid",
 });
 extend("email", {
   validate(value) {
-    return /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(value);
+    try {
+      emailSchema.validateSync(value);
+      return true;
+    } catch (err) {
+      return err.message;
+    }
   },
   message: "Please, enter a valid email address.",
 });
